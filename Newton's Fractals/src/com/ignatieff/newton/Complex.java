@@ -98,6 +98,39 @@ public class Complex {
 							Math.sin(r) * m);
 	}
 	
+	private static double CUTOFF = 0.0001;
+	public static boolean equals(Complex a, Complex b){
+		return (Math.abs(a.re - b.re) < CUTOFF && Math.abs(a.im - b.im) < CUTOFF);
+	}
+	
+	private static double roundOff(double a, int digits){
+		double m = Math.pow(10, digits);
+		return Math.round(a*m) / m;
+	}
+	
+	public Complex update(){
+		return update(this);
+	}
+	
+	public static Complex update(Complex a){
+		Complex roundOffComplex = new Complex(
+								  roundOff(a.re, Approximator.PRECISION),
+								  roundOff(a.im, Approximator.PRECISION));
+		return roundOffComplex;
+	}
+	
+	public boolean equals(Complex a){
+		return equals(this.update(), a.update());
+	}
+	
+	public double difference(Complex a){
+		return difference(this, a);
+	}
+	
+	public static double difference(Complex a, Complex b){
+		return Math.abs(a.re - b.re + a.im - b.im);
+	}
+	
 	@Override
 	public String toString(){
 		return re + " + i*"+im;

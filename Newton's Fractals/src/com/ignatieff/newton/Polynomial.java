@@ -38,6 +38,16 @@ public class Polynomial {
 		return new Polynomial(newTerms);
 	}
 	
+	public static Polynomial random(int length){
+		double[] terms = new double[length];
+		
+		for(int i=0; i<length; i++){
+			terms[i] = (int)(Math.random()*10);
+		}
+		
+		return new Polynomial(terms);
+	}
+	
 	public Complex getValue(Complex x){
 		Complex y = Complex.ZERO;
 		for(int i=0; i<terms.length; i++){
