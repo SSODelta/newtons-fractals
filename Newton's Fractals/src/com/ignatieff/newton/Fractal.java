@@ -1,6 +1,7 @@
 package com.ignatieff.newton;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -40,7 +41,7 @@ public class Fractal {
 		    		   byteToColor(0x232C16)};//Dark Olive Green;
 	
 	BufferedImage img;
-	int size, maxTime, bottom;
+	int sizeH, sizeW, maxTime, bottom;
 	double res, dr;
 	Map<Point, RootTime> roots;
 	ArrayList<Complex> usedColors;
@@ -58,11 +59,16 @@ public class Fractal {
 		this(size, 2);
 	}
 	
-	public Fractal(int size, double resolution){
-		this.size = size;
+	public Fractal(int sizeW, int sizeH, double resolution){
+		this.sizeW = sizeW;
+		this.sizeH = sizeH;
 		this.res  = resolution;
 		this.dr = resolution * 2;
 		bottom = (int) (Math.random()*22);
+	}
+	
+	public Fractal(int size, double resolution){
+		this(size,size,resolution);
 	}
 	
 	public Color getColorFromRoot(RootTime root){
@@ -83,12 +89,16 @@ public class Fractal {
 		return new Color(0,0,0);
 	}
 	
-	public static void generateAndSaveFractal(String path, int size, int complexity) throws IOException{
+	public static void generateAndSaveFractal(String path, Dimension d, int complexity) throws IOException{
 		File f = new File(path);
-		Fractal fractal = new Fractal(size);
+		Fractal fractal = new Fractal(d.width, d.height, 3);
 		Polynomial p = Polynomial.random(complexity);
 		BufferedImage img = fractal.generateFractal(p);
 		ImageIO.write(writeToImage(img, p.toString()), "png", f);
+	}
+	
+	public static void generateAndSaveFractal(String path, int size, int complexity) throws IOException{
+		generateAndSaveFractal(path, new Dimension(size,size), complexity);
 	}
 	
 	private static BufferedImage writeToImage(BufferedImage image, String text){
@@ -109,12 +119,12 @@ public class Fractal {
 		
 		//System.out.println("Polynomial = " + p.toString());
 		
-		img = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+		img = new BufferedImage(sizeW, sizeH, BufferedImage.TYPE_INT_ARGB);
 		usedColors = new ArrayList<Complex>();
 		roots = new HashMap<Point, RootTime>();
 		
-		for(int y=0; y<size; y++){
-			for(int x=0; x<size; x++){
+		for(int y=0; y<sizeH; y++){
+			for(int x=0; x<sizeW; x++){
 				processPixel(p, x, y);
 			}
 		}
@@ -124,8 +134,8 @@ public class Fractal {
 			System.out.println(rt.toString());
 		}*/
 		
-		for(int y=0; y<size; y++){
-			for(int x=0; x<size; x++){
+		for(int y=0; y<sizeH; y++){
+			for(int x=0; x<sizeW; x++){
 				Color c = getColorFromRoot(
 						roots.get(new Point(x,y)));
 				img.setRGB(x, y, c.getRGB());
@@ -137,8 +147,8 @@ public class Fractal {
 	}
 	
 	public void processPixel(Polynomial p, int x, int y){
-		Complex point = new Complex(getValueFromPixel(x),
-									getValueFromPixel(y)).update();
+		Complex point = new Complex(getValueFromPixel(x, sizeW, 1),
+									getValueFromPixel(y, sizeH, (double)sizeW / (double) sizeH)).update();
 		
 		Approximator a = new Approximator(p, point);
 		
@@ -160,7 +170,7 @@ public class Fractal {
 		return false;
 	}
 	
-	public double getValueFromPixel(int z){
-		return -res + ((double)dr)*(((double)z) / size);
+	public double getValueFromPixel(int z, int size, double mul){
+		return -(res/mul) + ((double)(dr/mul))*(((double)z) / size);
 	}
 }

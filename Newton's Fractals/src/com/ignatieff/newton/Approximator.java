@@ -24,7 +24,7 @@ public class Approximator {
 	public RootTime getRoot(){
 		double dx = 100;
 		int i = 0;
-		while(dx > 10E-15){
+		while(dx > 10E-15 && i<100){
 			i++;
 			dx = improveGuess();
 		}
