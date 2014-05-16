@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
-import javax.swing.colorchooser.ColorSelectionModel;
 
 public class Fractal {
 	
