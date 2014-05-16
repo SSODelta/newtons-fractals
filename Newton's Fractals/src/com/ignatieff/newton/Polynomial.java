@@ -12,19 +12,28 @@ public class Polynomial {
 		StringBuilder s = new StringBuilder();
 		
 		for(int i=terms.length; i>0; i--){
+			if(terms[(i-1)] == 0)continue;
 			if(i!=terms.length){s.append(" + ");}
 			if(i-1 == 0){
-				s.append(terms[(i-1)]);
+				s.append(numToString(terms[(i-1)]));
 				continue;
 			}
 			if(i-1 == 1){
-				s.append(terms[(i-1)] + " * x");
+				s.append(numToString(terms[(i-1)]) + " * x");
 				continue;
 			}
-			s.append(terms[(i-1)] + " * x^"+(i-1));
+			if(terms[(i-1)]==1)s.append("x^"+(i-1));
+			s.append(numToString(terms[(i-1)]) + " * x^"+(i-1));
 		}
 		
 		return s.toString();
+	}
+	
+	public String numToString(double k){
+		if(Math.floor(k) == k){
+			return "" + (int)k;
+		}
+		return "" + Complex.roundOff(k, 2);
 	}
 	
 	public Polynomial derivative(){
@@ -42,7 +51,7 @@ public class Polynomial {
 		double[] terms = new double[length];
 		
 		for(int i=0; i<length; i++){
-			terms[i] = (int)(Math.random()*10);
+			terms[i] = (Math.random()*10);
 		}
 		
 		return new Polynomial(terms);

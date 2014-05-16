@@ -103,7 +103,7 @@ public class Complex {
 		return (Math.abs(a.re - b.re) < CUTOFF && Math.abs(a.im - b.im) < CUTOFF);
 	}
 	
-	private static double roundOff(double a, int digits){
+	public static double roundOff(double a, int digits){
 		double m = Math.pow(10, digits);
 		return Math.round(a*m) / m;
 	}
