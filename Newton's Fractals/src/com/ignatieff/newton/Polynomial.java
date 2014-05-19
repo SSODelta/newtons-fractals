@@ -36,7 +36,11 @@ public class Polynomial {
 			s.append(numToString(Math.abs(terms[(i-1)])) + " * x^"+(i-1));
 		}
 		
-		return s.toString();
+		String k = s.toString();
+		
+		if(k.startsWith(" + "))return k.substring(3);
+		
+		return k;
 	}
 	
 	/**
