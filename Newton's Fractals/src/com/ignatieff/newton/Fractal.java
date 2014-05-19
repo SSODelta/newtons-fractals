@@ -49,7 +49,6 @@ public class Fractal {
 	private double res, dr;
 	private Map<Point, RootTime> roots;
 	private ArrayList<Complex> usedColors;
-	private ArrayList<Complex> points;
 	
 	/**
 	 * A list of integers coprime to 20. Used to cause variation in the colors.
@@ -115,12 +114,12 @@ public class Fractal {
 			if(usedColors.get(i).equals(root.root)){
 				Color c = COLORS[(bottom+i)%(COLORS.length)];
 				double d = 0.2 + ((double)root.tries / (double)maxTime) * 0.8;
-				Color q = new Color((int)(c.getRed() * d),
-								 (int)(c.getGreen() * d),
-								 (int)(c.getBlue() * d));
+				Color q = new Color((int)(c.getRed()   * d),
+								    (int)(c.getGreen() * d),
+								    (int)(c.getBlue()  * d));
 				return q;
 			}
-			i++;
+			i=(i+increment)%COLORS.length;
 		}
 		return new Color(0,0,0);
 	}
@@ -155,10 +154,11 @@ public class Fractal {
 	 * Writes text to a BufferedImage-object in the lower right corner.
 	 * Used to write the name of the polynomial unto the image object.
 	 * @param image The image to write on.
-	 * @param text The text to write
+	 * @param textToWrite The text to write
 	 * @return A new BufferedImage, which has text written unto it.
 	 */
-	private static BufferedImage writeToImage(BufferedImage image, String text){
+	private static BufferedImage writeToImage(BufferedImage image, String textToWrite){
+		String text = textToWrite.replace("*", "·");
 		Graphics2D g = image.createGraphics();
 		g.setFont(new Font("Sans-Serif", Font.BOLD, 17));
 		FontMetrics fm = g.getFontMetrics(); 
