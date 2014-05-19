@@ -17,17 +17,23 @@ public class Polynomial {
 		
 		for(int i=terms.length; i>0; i--){
 			if(terms[(i-1)] == 0)continue;
-			if(i!=terms.length){s.append(" + ");}
+			if(i!=terms.length){
+				if(terms[(i-1)] > 0){
+					s.append(" + ");
+				} else {
+					s.append(" - ");
+				}
+			}
 			if(i-1 == 0){
 				s.append(numToString(terms[(i-1)]));
 				continue;
 			}
 			if(i-1 == 1){
-				s.append(numToString(terms[(i-1)]) + " * x");
+				s.append(numToString(Math.abs(terms[(i-1)])) + " * x");
 				continue;
 			}
 			if(terms[(i-1)]==1)s.append("x^"+(i-1));
-			s.append(numToString(terms[(i-1)]) + " * x^"+(i-1));
+			s.append(numToString(Math.abs(terms[(i-1)])) + " * x^"+(i-1));
 		}
 		
 		return s.toString();
