@@ -293,7 +293,7 @@ public class Complex {
 	 * @return Returns 'true' if they are approximately equal.
 	 */
 	public static boolean equals(Complex a, Complex b){
-		return (Math.abs(a.re - b.re) < CUTOFF && Math.abs(a.im - b.im) < CUTOFF);
+		return (difference(a,b) < CUTOFF);
 	}
 	
 	/**
