@@ -25,7 +25,7 @@ public class Polynomial {
 				}
 			}
 			if(i-1 == 0){
-				s.append(numToString(terms[(i-1)]));
+				s.append(numToString(Math.abs(terms[(i-1)])));
 				continue;
 			}
 			if(i-1 == 1){

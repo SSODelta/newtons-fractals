@@ -183,11 +183,19 @@ public class Fractal {
 		usedColors = new ArrayList<Complex>();
 		roots = new HashMap<Point, RootTime>();
 		
+		long a = System.currentTimeMillis();
+		
+		System.out.println("	Processing pixels...");
+		
 		for(int y=0; y<sizeH; y++){
 			for(int x=0; x<sizeW; x++){
 				processPixel(p, x, y);
 			}
 		}
+		
+		long dx = (System.currentTimeMillis() - a) / 1000;
+		System.out.println("	Done processing pixels. Elapsed time: " + dx + " sec.\nColoring pixels...");
+		a = System.currentTimeMillis();
 		
 		for(int y=0; y<sizeH; y++){
 			for(int x=0; x<sizeW; x++){
@@ -196,6 +204,9 @@ public class Fractal {
 				img.setRGB(x, y, c.getRGB());
 			}
 		}
+		
+		dx = (System.currentTimeMillis() - a) / 1000;
+		System.out.println("	Done coloring pixels. Elapsed time: " + dx + "sec.");
 		
 		return img;
 		
