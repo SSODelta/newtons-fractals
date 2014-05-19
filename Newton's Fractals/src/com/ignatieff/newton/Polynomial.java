@@ -3,6 +3,10 @@ package com.ignatieff.newton;
 public class Polynomial {
 	public double[] terms;
 	
+	/**
+	 * Instantiate a new Polynomial-object with a specified number of terms.
+	 * @param terms The number of terms in this polynomial. Keep in mind, that if terms = 2, then it's a linear equation.
+	 */
 	public Polynomial(double[] terms){
 		this.terms = terms;
 	}
@@ -29,6 +33,11 @@ public class Polynomial {
 		return s.toString();
 	}
 	
+	/**
+	 * Rounds off a double-object to two significant digits and returns it as a String-object.
+	 * @param k The double to convert.
+	 * @return A String-object representing the double.
+	 */
 	public String numToString(double k){
 		if(Math.floor(k) == k){
 			return "" + (int)k;
@@ -36,6 +45,10 @@ public class Polynomial {
 		return "" + Complex.roundOff(k, 2);
 	}
 	
+	/**
+	 * Returns a new Polynomial-object which is the derivate of this current Polynomial.
+	 * @return The derivate of this polynomial.
+	 */
 	public Polynomial derivative(){
 		if(terms == null)return null;
 		double[] newTerms = new double[terms.length-1];
@@ -47,16 +60,26 @@ public class Polynomial {
 		return new Polynomial(newTerms);
 	}
 	
+	/**
+	 * Returns a new Polynomial-object of a specified length with random terms.
+	 * @param length The number of terms of the Polynomial.
+	 * @return A new Polynomial-object.
+	 */
 	public static Polynomial random(int length){
 		double[] terms = new double[length];
 		
 		for(int i=0; i<length; i++){
-			terms[i] = (Math.random()*10);
+			terms[i] = -10+(Math.pow(Math.random(), 2) *20);
 		}
 		
 		return new Polynomial(terms);
 	}
 	
+	/**
+	 * Get the function value for a given x. That is, if this polynomial is the function f, then this return f(x).
+	 * @param x The complex argument for the polynomial.
+	 * @return f(x).
+	 */
 	public Complex getValue(Complex x){
 		Complex y = Complex.ZERO;
 		for(int i=0; i<terms.length; i++){
@@ -71,6 +94,11 @@ public class Polynomial {
 		return y;
 	}
 	
+	/**
+	 * Get the function value for a given x. That is, if this polynomial is the function f, then this return f(x).
+	 * @param x The real argument for the polynomial.
+	 * @return f(x).
+	 */
 	public double getValue(double x){
 		double y = 0;
 		for(int i=0; i<terms.length; i++){
