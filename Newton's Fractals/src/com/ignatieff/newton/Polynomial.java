@@ -75,7 +75,7 @@ public class Polynomial {
 		double[] terms = new double[length];
 		
 		for(int i=0; i<length; i++){
-			terms[i] = -10+(Math.pow(Math.random(), 2) *20);
+			terms[i] = Complex.roundOff((Math.pow(Math.random(), 4) *20)*(1+(Math.round(Math.random())*-2)),2);
 		}
 		
 		return new Polynomial(terms);

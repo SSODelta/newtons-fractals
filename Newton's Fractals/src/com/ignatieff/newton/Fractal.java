@@ -21,7 +21,7 @@ public class Fractal {
 	 * Array containing all the disposable colors for this generator.
 	 * This list is Kelly's list of maximum contrast colors.
 	 */
-	Color[] COLORS = { byteToColor(0xFFB300), //Vivid Yellow
+	private Color[] COLORS = { byteToColor(0xFFB300), //Vivid Yellow
 		    		   byteToColor(0x803E75), //Strong Purple
 		    		   byteToColor(0xFF6800), //Vivid Orange
 		    		   byteToColor(0xA6BDD7), //Very Light Blue
@@ -44,24 +44,24 @@ public class Fractal {
 		    		   byteToColor(0xF13A13), //Vivid Reddish Orange
 		    		   byteToColor(0x232C16)};//Dark Olive Green;
 	
-	BufferedImage img;
-	int sizeH, sizeW, maxTime, bottom, increment;
-	double res, dr;
-	Map<Point, RootTime> roots;
-	ArrayList<Complex> usedColors;
-	ArrayList<Complex> points;
+	private BufferedImage img;
+	private int sizeH, sizeW, maxTime, bottom, increment;
+	private double res, dr;
+	private Map<Point, RootTime> roots;
+	private ArrayList<Complex> usedColors;
+	private ArrayList<Complex> points;
 	
 	/**
-	 * A list of integers coprime to 21. Used to cause variation in the colors.
+	 * A list of integers coprime to 20. Used to cause variation in the colors.
 	 */
-	int[] increments = {1, 3, 7, 9, 11, 13, 17, 19};
+	private int[] increments = {1, 3, 7, 9, 11, 13, 17, 19};
 	
 	/**
 	 * Converts an integer to a Color-object. Used to convert Kelly's list to Color-objects.
 	 * @param color The color-integer 0xRRGGBB to convert.
 	 * @return A Color-object representing the integer.
 	 */
-	public Color byteToColor(int color){
+	private Color byteToColor(int color){
 		return new Color(color);
 	}
 	
@@ -109,7 +109,7 @@ public class Fractal {
 	 * @param root The root to map to a color.
 	 * @return A color which is mapped to by the root.
 	 */
-	public Color getColorFromRoot(RootTime root){
+	private Color getColorFromRoot(RootTime root){
 		int i = 0;
 		while(i < usedColors.size()){
 			if(usedColors.get(i).equals(root.root)){
@@ -220,7 +220,7 @@ public class Fractal {
 	 * @param x The x-coordinate (in pixels) of the pixel to process.
 	 * @param y The y-coordinate (in pixels) of the pixel to process.
 	 */
-	public void processPixel(Polynomial p, int x, int y){
+	private void processPixel(Polynomial p, int x, int y){
 		Complex point = new Complex(getValueFromPixel(x, sizeW, 1),
 									getValueFromPixel(y, sizeH, (double)sizeW / (double) sizeH)).update();
 		
@@ -242,7 +242,7 @@ public class Fractal {
 	 * @param root The root to check whether or not exists.
 	 * @return Returns 'true' if it exists, and 'false' otherwise.
 	 */
-	public boolean containsRoot(Complex root){
+	private boolean containsRoot(Complex root){
 		for(Complex c : usedColors){
 			if(c.equals(root))return true;
 		}
@@ -256,7 +256,7 @@ public class Fractal {
 	 * @param mul The stretch-factor of the coordinate system.
 	 * @return A double representing the complex (or real) part of the complex number.
 	 */
-	public double getValueFromPixel(int z, int size, double mul){
+	private double getValueFromPixel(int z, int size, double mul){
 		return -(res/mul) + ((double)(dr/mul))*(((double)z) / size);
 	}
 }
